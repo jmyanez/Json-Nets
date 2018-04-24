@@ -59,3 +59,4 @@ def toGraph(dictionary):
 
          root = node("root",[leaf1,leaf1,leaf2])
          root.show()
+         #
