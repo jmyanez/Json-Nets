@@ -19,11 +19,11 @@ leaf2 = node("leaf2")
 root = node("root", [leaf1, leaf1, leaf2])
 
 # Execute in server:
-def convert(graph, myDict,EmptyDictionary):
+def convert(graph,EmptyDictionary):
     #print "myDict is ", myDict
 
     if graph == None:
-        return myDict
+        return EmptyDictionary
 
     elif graph.children != None:
         EmptyDictionary["name"]= graph.name
@@ -31,20 +31,20 @@ def convert(graph, myDict,EmptyDictionary):
         for c in graph.children:
             child = c.__dict__
             EmptyDictionary["children"].append(child)
-
-
         #print EmptyDictionary
-
     return EmptyDictionary
 
 
 dictionary = {"name":None,"val":None,"children":[]}
-dictRoot = convert(root,root,dictionary)
+dictRoot = convert(root,dictionary)
 print dictRoot
+for c in dictRoot:
+    print c
+#dictRoot = json.dumps(dictRoot,sort_keys=True)
+result = server.toGraph(dictRoot)
 
 
-print "graph after increment"
-#print(result)
+
 rpc.close() # Closes the socket 's' also
 
 

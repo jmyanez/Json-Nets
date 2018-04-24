@@ -5,17 +5,28 @@ import socket
 from bsonrpc import JSONRpc
 from bsonrpc import request, service_class
 from node import *
+import json
 
 
 # Class providing functions for the client to use:
 @service_class
 class ServerServices(object):
 
-  @request
-  def increment(self,graph):
-      graph.val += 1
-      for c in graph.children:
-          increment(c)
+    @request
+    def increment(self, graph):
+        graph.val += 1
+        for c in graph.children:
+            increment(c)
+        return graph
+
+    @request
+    def toGraph(self, dictionary):
+        root = node()
+
+        for key in dictionary:
+            if key == 'name':
+                print dictionary[key]
+                root = node(dictionary[key])
 
 
 # Quick-and-dirty TCP Server:
@@ -24,9 +35,9 @@ ss.bind(('localhost', 50001))
 ss.listen(10)
 
 while True:
-  s, _ = ss.accept()
-  # JSONRpc object spawns internal thread to serve the connection.
-  JSONRpc(s, ServerServices())
+    s, _ = ss.accept()
+    # JSONRpc object spawns internal thread to serve the connection.
+    JSONRpc(s, ServerServices())
 Client
 
 
