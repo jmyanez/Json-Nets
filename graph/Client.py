@@ -19,30 +19,29 @@ leaf2 = node("leaf2")
 root = node("root", [leaf1, leaf1, leaf2])
 
 # Execute in server:
-def convert(graph, myDict):
-    print "myDict is ", myDict
-    if not graph:
-        return myDict
+def convert(graph, myDict,EmptyDictionary):
+    #print "myDict is ", myDict
 
-    elif graph.name != "root":
-        child = graph.__dict__
-        if "children" not in myDict:
-            myDict["children"] = []
-        return child
+    if graph == None:
+        return myDict
 
     elif graph.children != None:
-        myDict = graph.__dict__
-        temp = graph
-        print temp.children
+        EmptyDictionary["name"]= graph.name
+        EmptyDictionary["val"]= graph.val
         for c in graph.children:
-            child = convert(c,myDict)
-            myDict["children"].append(child)
-        return myDict
+            child = c.__dict__
+            EmptyDictionary["children"].append(child)
 
- #   for c in graph.children:
-dictRoot = convert(root,dict())
+
+        #print EmptyDictionary
+
+    return EmptyDictionary
+
+
+dictionary = {"name":None,"val":None,"children":[]}
+dictRoot = convert(root,root,dictionary)
 print dictRoot
-#result = server.increment(dictRoot)
+
 
 print "graph after increment"
 #print(result)
