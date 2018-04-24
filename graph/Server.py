@@ -25,21 +25,39 @@ class ServerServices(object):
 
     for key in dictionary:
      if key == 'name':
-         print dictionary[key]
+         root.name= dictionary[key]
+         #print "root name is:" ,root.name
 
      elif key=='val':
-         print dictionary[key]
+         root.val= dictionary[key]
+         #print "root value is:", root.val
 
      elif key=='children':
+         #print "Children are:", root.children
+         leaf1 = node("leaf1")
+         leaf2 = node("leaf2")
          for x in dictionary[key]:
-           # print x
+            root.children = leafx=node("x")
             for y in x:
-                if y == 'name':
-                    print "name is:",x[y]
-                elif y=='val':
-                    print "val is:", x[y]
-                elif y=='children':
-                    print "children is:",x[y]
+              if x["name"]=='leaf1':
+                    leaf1.name = x["name"]
+                    leaf1.val = x["val"]
+                    leaf1.children=x["children"]
+                   # print "leaf 1 name is:" , leaf1.name
+
+              elif x["name"]=='leaf2':
+                    leaf2.name = x["name"]
+                    leaf2.val = x["val"]
+                    leaf2.children=x["children"]
+                    #print "leaf 2 name is:" , leaf2.name
+
+         root = node("root",[leaf1,leaf1,leaf2])
+         root.show()
+         increment(root)
+         root.show()
+         dictionary = {"name": None, "val": None, "children": []}
+         dictionary= toDictionary(root,dictionary)
+         return dictionary
 
 
 

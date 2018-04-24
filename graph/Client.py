@@ -34,14 +34,50 @@ def convert(graph,EmptyDictionary):
         #print EmptyDictionary
     return EmptyDictionary
 
+def toGraph(Dictionary):
+    root = node("root", [])
+
+    for key in dictionary:
+        if key == 'name':
+            root.name = dictionary[key]
+            # print "root name is:" ,root.name
+
+        elif key == 'val':
+            root.val = dictionary[key]
+            # print "root value is:", root.val
+
+        elif key == 'children':
+            # print "Children are:", root.children
+            leaf1 = node("leaf1")
+            leaf2 = node("leaf2")
+            for x in dictionary[key]:
+                root.children = leafx = node("x")
+                for y in x:
+                    if x["name"] == 'leaf1':
+                        leaf1.name = x["name"]
+                        leaf1.val = x["val"]
+                        leaf1.children = x["children"]
+                    # print "leaf 1 name is:" , leaf1.name
+
+                    elif x["name"] == 'leaf2':
+                        leaf2.name = x["name"]
+                        leaf2.val = x["val"]
+                        leaf2.children = x["children"]
+                        # print "leaf 2 name is:" , leaf2.name
+
+            root = node("root", [leaf1, leaf1, leaf2])
+            root.show()
+            return root
 
 dictionary = {"name":None,"val":None,"children":[]}
 dictRoot = convert(root,dictionary)
-print dictRoot
-for c in dictRoot:
-    print c
+#print dictRoot
 #dictRoot = json.dumps(dictRoot,sort_keys=True)
 result = server.toGraph(dictRoot)
+x =  toGraph(result)
+x.show()
+#print resultGraph
+
 
 
 
