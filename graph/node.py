@@ -5,14 +5,20 @@ class node:
         self.val = 0
     def show(self, level=0):
         print "%s%s val=%d:" % (level*"  ", self.name, self.val)
-        for c in self.children:
+        for c in self.children: 
             c.show(level + 1)
+#Modified increment function to only increment a child once
+def increment(graph,nodeName):
+  if graph.name not in nodeName:
+      graph.val += 1
+      nodeName.append(graph.name)
+      for c in graph.children:
+          increment(c,nodeName)
+      return graph
+  else:
+      return graph
 
-def increment(graph):
-    graph.val += 1;
-    for c in graph.children:
-        increment(c)
-
+#Function to convert graph to dictionary
 def toDictionary(graph,Dictionary):
   if graph == None:
       return Dictionary
@@ -26,6 +32,7 @@ def toDictionary(graph,Dictionary):
       # print EmptyDictionary
   return Dictionary
 
+#Function to convert dictionary to graph
 def toGraph(dictionary):
     root = node("root",[])
 
@@ -59,4 +66,3 @@ def toGraph(dictionary):
 
          root = node("root",[leaf1,leaf1,leaf2])
          root.show()
-         #

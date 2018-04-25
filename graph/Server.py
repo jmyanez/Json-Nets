@@ -13,12 +13,17 @@ import json
 class ServerServices(object):
 
   @request
-  def increment(self,graph):
-      graph.val += 1
-      for c in graph.children:
-          increment(c)
-      return graph
+  def increment(self,graph,nodeName):
+      if graph.name not in nodeName:
+          graph.val += 1
+          nodeName.append(graph.name)
+          for c in graph.children:
+              increment(c,nodeName)
+          return graph
+      else:
+          return graph
 
+#Converts Dictionary to Graph
   @request
   def toGraph(self,dictionary):
     root = node("root",[])
@@ -29,8 +34,8 @@ class ServerServices(object):
          #print "root name is:" ,root.name
 
      elif key=='val':
-         root.val= dictionary[key]
-         #print "root value is:", root.val
+         #root.val= dictionary[key]
+         print "root value is:", root.val
 
      elif key=='children':
          #print "Children are:", root.children
@@ -52,11 +57,10 @@ class ServerServices(object):
                     #print "leaf 2 name is:" , leaf2.name
 
          root = node("root",[leaf1,leaf1,leaf2])
-         root.show()
-         increment(root)
-         root.show()
+         nodeName = []
+         increment(root,nodeName)
          dictionary = {"name": None, "val": None, "children": []}
-         dictionary= toDictionary(root,dictionary)
+         dictionary = toDictionary(root,dictionary)
          return dictionary
 
 
@@ -73,4 +77,3 @@ while True:
 Client
 
 
-#
